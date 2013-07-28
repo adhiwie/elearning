@@ -174,7 +174,8 @@ class Admin extends CI_Controller {
 				'password' =>$password, 
 				'name'     =>$name, 
 				'email'    =>$email,
-				'role'     =>$role
+				'role'     =>$role,
+				'status'   =>'0'
 			);
 			$this->users_model->add_user($data);
 			redirect('admin/user');

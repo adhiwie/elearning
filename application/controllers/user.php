@@ -70,6 +70,7 @@ class User extends CI_Controller {
 			$detail   = $this->user_model->get_detail($username)->row();
 			$role     = $detail->role;
 			$id       = $detail->id;
+			$status   = $detail->status;
 			$userdata = array('username'=>$username,'password'=>$password,'role'=>$role,'id'=>$id);
 			$this->session->set_userdata($userdata);
 			if($role==0){
@@ -79,7 +80,8 @@ class User extends CI_Controller {
 			}elseif($role==1){
 				redirect('user');
 			}else{
-				redirect('user/ahp_question_list');
+				if($status == 0) redirect('user/ahp_question_list');
+				else redirect('user/ahp_result');
 			}
 		} else {
 			$data['isi']   = 'user_login';
@@ -215,7 +217,7 @@ class User extends CI_Controller {
 		$this->table->set_template($template);
 
 		$this->table->set_heading('','A','B','C','D','E','F','G','H','I','J','K','L','M');
-		$raw_list= $this->ahp_model->get_raw_data()->result();
+		$raw_list= $this->ahp_model->get_raw_data($this->session->userdata('id'))->result();
 		foreach($raw_list as $raw){
 			if($raw->row == 1) array_push($row_1,$raw->value);
 			elseif($raw->row == 2) array_push($row_2,$raw->value);
@@ -268,7 +270,7 @@ class User extends CI_Controller {
 		$this->table->set_template($template);
 
 		$this->table->set_heading('','A','B','C','D','E','F','G','H','I','J','K','L','M','AHP');
-		$raw_list= $this->ahp_model->get_normalized_data()->result();
+		$raw_list= $this->ahp_model->get_normalized_data($this->session->userdata('id'))->result();
 		foreach($raw_list as $raw){
 			if($raw->row == 1) array_push($row_1,$raw->value);
 			elseif($raw->row == 2) array_push($row_2,$raw->value);
@@ -285,7 +287,7 @@ class User extends CI_Controller {
 			else array_push($row_13,$raw->value);
 		}
 		$alfabet = array('A','B','C','D','E','F','G','H','I','J','K','L','M');
-		$ahp_result = $this->ahp_model->get_ahp()->row();
+		$ahp_result = $this->ahp_model->get_ahp($this->session->userdata('id'))->row();
 		$ahp_score = $ahp_result->bobot;
 		$ahp_list = explode(',',$ahp_score);
 
@@ -293,10 +295,9 @@ class User extends CI_Controller {
 			$index = $row-1;
 			$this->table->add_row('<strong>'.$alfabet[$index].'</strong>',eval('return $row_'.$row.'[0];'),eval('return $row_'.$row.'[1];'),eval('return $row_'.$row.'[2];'),eval('return $row_'.$row.'[3];'),eval('return $row_'.$row.'[4];'),eval('return $row_'.$row.'[5];'),eval('return $row_'.$row.'[6];'),eval('return $row_'.$row.'[7];'),eval('return $row_'.$row.'[8];'),eval('return $row_'.$row.'[9];'),eval('return $row_'.$row.'[10];'),eval('return $row_'.$row.'[11];'),eval('return $row_'.$row.'[12];'),'<strong>'.round($ahp_list[$index],3).'</strong>');
 		}
-
-
-
-		
+		$id = $this->session->userdata('id');
+		$user_data = array('status'=>'1');
+		$this->user_model->set_status($id,$user_data);
 		return $this->table->generate();
 
 	}

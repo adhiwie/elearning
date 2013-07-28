@@ -1,8 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Ahp_model extends CI_Model {
-	public function get_ahp()
+	public function get_ahp($user_id)
 	{
+		$this->db->where('user_id',$user_id);
 		$this->db->select('*');
 		return $this->db->get('ahp_result');
 	}
@@ -21,13 +22,15 @@ class Ahp_model extends CI_Model {
 	{
 		$this->db->insert('column_sum',$data);
 	}
-	public function get_raw_data()
+	public function get_raw_data($user_id)
 	{
+		$this->db->where('user_id',$user_id);
 		$this->db->select('*');
 		return $this->db->get('raw_table');
 	}
-	public function get_normalized_data()
+	public function get_normalized_data($user_id)
 	{
+		$this->db->where('user_id',$user_id);
 		$this->db->select('*');
 		return $this->db->get('normalized_table');
 	}

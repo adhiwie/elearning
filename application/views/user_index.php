@@ -8,7 +8,7 @@
 				</a>
 			</li>
 
-			<li <?php if ($this->uri->segment(2)=="result") echo 'class="active"';?>>
+			<li <?php if ($this->uri->segment(2)=="ahp_result") echo 'class="active"';?>>
 				<a href="<?=base_url()?>admin/elearning">
 				<i class="icon-chevron-right"></i>
 				Hasil Penilaian
