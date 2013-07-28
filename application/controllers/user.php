@@ -287,7 +287,7 @@ class User extends CI_Controller {
 			else array_push($row_13,$raw->value);
 		}
 		$alfabet = array('A','B','C','D','E','F','G','H','I','J','K','L','M');
-		$ahp_result = $this->ahp_model->get_ahp($this->session->userdata('id'))->row();
+		$ahp_result = $this->ahp_model->get_ahp()->row();
 		$ahp_score = $ahp_result->bobot;
 		$ahp_list = explode(',',$ahp_score);
 
@@ -407,7 +407,62 @@ class User extends CI_Controller {
 		}
 	}
 
+	public function aggregate_ahp()
+	{
+		$proses_1  =1;
+		$proses_2  =1;
+		$proses_3  =1;
+		$proses_4  =1;
+		$proses_5  =1;
+		$proses_6  =1;
+		$proses_7  =1;
+		$proses_8  =1;
+		$proses_9  =1;
+		$proses_10 =1;
+		$proses_11 =1;
+		$proses_12 =1;
+		$proses_13 =1;
 
+		$ahp_result = $this->ahp_model->get_ahp();
+		foreach ($ahp_result as $res) {
+			$pecah = explode(',',$res->bobot);
+			$i=0;
+			do{
+				if($i==0) $proses_1=$proses_1*$pecah[$i];
+				elseif($i==1) $proses_2=$proses_2*$pecah[$i];
+				elseif($i==2) $proses_3=$proses_3*$pecah[$i];
+				elseif($i==3) $proses_4=$proses_4*$pecah[$i];
+				elseif($i==4) $proses_5=$proses_5*$pecah[$i];
+				elseif($i==5) $proses_6=$proses_6*$pecah[$i];
+				elseif($i==6) $proses_7=$proses_7*$pecah[$i];
+				elseif($i==7) $proses_8=$proses_8*$pecah[$i];
+				elseif($i==8) $proses_9=$proses_9*$pecah[$i];
+				elseif($i==9) $proses_10=$proses_10*$pecah[$i];
+				elseif($i==10) $proses_11=$proses_11*$pecah[$i];
+				elseif($i==11) $proses_12=$proses_12*$pecah[$i];
+				elseif($i==12) $proses_13=$proses_13*$pecah[$i];
+				$i++;
+			}while($i<13);
+		}
+		$proses_akhir_1=pow($proses_1,1/3);
+		$proses_akhir_2=pow($proses_2,1/3);
+		$proses_akhir_3=pow($proses_3,1/3);
+		$proses_akhir_4=pow($proses_4,1/3);
+		$proses_akhir_5=pow($proses_5,1/3);
+		$proses_akhir_6=pow($proses_6,1/3);
+		$proses_akhir_7=pow($proses_7,1/3);
+		$proses_akhir_8=pow($proses_8,1/3);
+		$proses_akhir_9=pow($proses_9,1/3);
+		$proses_akhir_10=pow($proses_10,1/3);
+		$proses_akhir_11=pow($proses_11,1/3);
+		$proses_akhir_12=pow($proses_12,1/3);
+		$proses_akhir_13=pow($proses_13,1/3);
+
+		$isi_data = array(
+			'bobot'=>$proses_akhir_1.','.$proses_akhir_2.','.$proses_akhir_3.','.$proses_akhir_4.','.$proses_akhir_5.','.$proses_akhir_6.','.$proses_akhir_7.','.$proses_akhir_8.','.$proses_akhir_9.','.$proses_akhir_10.','.$proses_akhir_11.','.$proses_akhir_12.','.$proses_akhir_13
+		);
+		$this->ahp_model->insert_aggregated_ahp($isi_data);
+	}
 	public function question_list($temp)
 	{
 		$this->load->library('table');
@@ -570,7 +625,6 @@ class User extends CI_Controller {
 			}
 			
 		}
-
 		for($i=1;$i<=10;$i++){
 			$nilai_kategori_1 = $nilai_kategori_1 + eval('return $nilai_proses_'.$i.';');
 		}
@@ -618,7 +672,7 @@ class User extends CI_Controller {
 		$recommendation_list = $result->recommendation;
 
 		//----------------------------------------------------
-		$ahp_result = $this->ahp_model->get_ahp()->row();
+		$ahp_result = $this->ahp_model->get_aggregated_ahp()->row();
 		$ahp_score = $ahp_result->bobot;
 
 		

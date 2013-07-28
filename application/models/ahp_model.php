@@ -1,14 +1,23 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Ahp_model extends CI_Model {
-	public function get_ahp($user_id)
+	public function get_ahp()
 	{
-		$this->db->where('user_id',$user_id);
 		$this->db->select('*');
-		return $this->db->get('ahp_result');
+		$query = $this->db->get('ahp_result');
+		return $query->result();
+	}
+	public function get_aggregated_ahp()
+	{
+		$this->db->select('*');
+		return $this->db->get('ahp_aggregated');
 	}
 	public function insert_ahp($data){
 		$this->db->insert('ahp_result',$data);
+	}
+	public function insert_aggregated_ahp($data)
+	{
+		$this->db->insert('ahp_aggregated',$data);
 	}
 	public function insert_raw_table($data)
 	{
