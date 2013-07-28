@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 28, 2013 at 03:58 PM
+-- Generation Time: Jul 29, 2013 at 01:26 AM
 -- Server version: 5.5.25
 -- PHP Version: 5.4.4
 
@@ -13,6 +13,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `elearning`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ahp_aggregated`
+--
+
+CREATE TABLE `ahp_aggregated` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bobot` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `ahp_aggregated`
+--
+
+INSERT INTO `ahp_aggregated` (`id`, `bobot`) VALUES
+(2, '0.105408119328,0.101655758753,0.169803034488,0.128372240242,0.102493559514,0.0833636456578,0.068074437891,0.0553388943409,0.0444704554638,0.0348998127975,0.0264003588966,0.0186492068558,0.0114831956204');
 
 -- --------------------------------------------------------
 
@@ -126,7 +145,14 @@ CREATE TABLE `elearning` (
   `name` varchar(45) DEFAULT NULL,
   `desc` varchar(65) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `elearning`
+--
+
+INSERT INTO `elearning` (`id`, `name`, `desc`) VALUES
+(1, 'BeSmart', 'BeSmart');
 
 -- --------------------------------------------------------
 
@@ -744,23 +770,6 @@ INSERT INTO `process` (`id`, `proc_name`, `cat_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `question`
---
-
-CREATE TABLE `question` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question` varchar(45) DEFAULT NULL,
-  `recommendation` varchar(45) DEFAULT NULL,
-  `cat_id` int(11) DEFAULT NULL,
-  `proc_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cat_id_idx` (`cat_id`),
-  KEY `proc_id_idx` (`proc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `raw_table`
 --
 
@@ -1296,11 +1305,19 @@ CREATE TABLE `result` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `elearning_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `score` double DEFAULT NULL,
+  `score_process` text,
+  `recommendation` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `elearning_id_idx` (`elearning_id`),
   KEY `user_id_idx` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `result`
+--
+
+INSERT INTO `result` (`id`, `elearning_id`, `user_id`, `score_process`, `recommendation`) VALUES
+(7, 1, 5, '2,2,3,5,2,4,1,2,2,1,3,2,2', '');
 
 -- --------------------------------------------------------
 
@@ -1317,7 +1334,7 @@ CREATE TABLE `user` (
   `role` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `user`
@@ -1327,18 +1344,12 @@ INSERT INTO `user` (`id`, `username`, `password`, `name`, `email`, `role`, `stat
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'admin@aol.com', 0, 0),
 (2, 'adhi', '092bcc1028d905aa6c2c30ebe833f90f', 'adhi', 'adhi@aol.com', 2, 1),
 (3, 'wica', '4593b4f992ef550397b7fe63b6c3fd88', 'wica', 'wica@aol.com', 2, 1),
-(4, 'sono', '4179bfaf174de35ac247edf34184942f', 'sono', 'sono@aol.com', 2, 1);
+(4, 'sono', '4179bfaf174de35ac247edf34184942f', 'sono', 'sono@aol.com', 2, 1),
+(5, 'budi', '00dfc53ee86af02e742515cdcf075ed3', 'budi', 'budi@aol.com', 1, 1);
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `question`
---
-ALTER TABLE `question`
-  ADD CONSTRAINT `cat_id` FOREIGN KEY (`cat_id`) REFERENCES `process` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `proc_id` FOREIGN KEY (`proc_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `result`
@@ -1346,4 +1357,3 @@ ALTER TABLE `question`
 ALTER TABLE `result`
   ADD CONSTRAINT `elearning_id` FOREIGN KEY (`elearning_id`) REFERENCES `elearning` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
