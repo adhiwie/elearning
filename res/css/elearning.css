@@ -1,0 +1,50 @@
+body {
+	margin-top:70px;
+}
+
+#loading-image {
+  position:   fixed;
+  z-index:    1000;
+  top:        0;
+  left:       0;
+  height:     100%;
+  width:      100%;
+  background: rgba( 255, 255, 255, .8 ) 
+              url('../img/loading.gif') 
+              50% 50% 
+              no-repeat;
+}
+
+.total-value-container{
+  padding: 30px;
+  font-size: 24px;
+    background-color: #fff;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.15);
+     -moz-box-shadow: 0 1px 4px rgba(0,0,0,.15);
+          box-shadow: 0 1px 4px rgba(0,0,0,.15);
+  width: 300px;
+  height: 170px;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.total-value {
+  font-size: 72px;
+  text-align: center;
+}
+.bobot {
+  width: 70px;
+}
+.table-ahp {
+  width: 60px;
+}
+
+.login-form {
+  max-width: 400px;
+}

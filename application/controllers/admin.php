@@ -43,7 +43,7 @@ class Admin extends CI_Controller {
 			$data['admin_page'] = 'admin_edit';
 			$this->load->view('home',$data);
 		}elseif($new_password != $confirm_new_password){
-			$data['error'] = '<div class="alert alert-error">Password baru tidak cocok</div>';
+			$data['error'] = '<div class="alert alert-danger">Password baru tidak cocok</div>';
 			$data['isi'] = 'admin_index';
 			$data['admin_page'] = 'admin_edit';
 			$this->load->view('home',$data);
@@ -62,8 +62,8 @@ class Admin extends CI_Controller {
 		$config['base_url']        = base_url().'admin/userlists';
 		$config['total_rows']      = $this->users_model->get_total_row();
 		$config['per_page']        = 10;
-		$config['full_tag_open']   = '<div class="pagination"><ul>';
-		$config['full_tag_close']  = '</ul></div>';
+		$config['full_tag_open']   = '<ul class="pagination">';
+		$config['full_tag_close']  = '</ul>';
 		$config['first_tag_open']  = '<li>';
 		$config['first_tag_close'] = '</li>';
 		$config['last_tag_open']   = '<li>';
@@ -91,7 +91,7 @@ class Admin extends CI_Controller {
 		$user_list= $this->users_model->get_user_list(10,0);
 		$nomor=1;
 		foreach($user_list as $user){
-			$this->table->add_row($nomor++,$user->username,$user->name,$user->email,'<a href="'.base_url().'user/remove/'.$user->id.'"><i class="icon-remove"></i></a> <a href="'.base_url().'user/detail/'.$user->id.'"><i class="icon-edit"></i></a>');
+			$this->table->add_row($nomor++,$user->username,$user->name,$user->email,'<a href="'.base_url().'user/detail/'.$user->id.'"><span class="label label-success">detail</span></a> <a href="'.base_url().'user/edit/'.$user->id.'"><span class="label label-warning">edit</span></a> <a href="'.base_url().'user/remove/'.$user->id.'"><span class="label label-danger">hapus</span></a>');
 		}
 
 		$data['table'] = $this->table->generate();
@@ -106,8 +106,8 @@ class Admin extends CI_Controller {
 		$config['base_url']        = base_url().'admin/userlists';
 		$config['total_rows']      = $this->users_model->get_total_row();
 		$config['per_page']        = 10;
-		$config['full_tag_open']   = '<div class="pagination"><ul>';
-		$config['full_tag_close']  = '</ul></div>';
+		$config['full_tag_open']   = '<ul class="pagination">';
+		$config['full_tag_close']  = '</ul>';
 		$config['first_tag_open']  = '<li>';
 		$config['first_tag_close'] = '</li>';
 		$config['last_tag_open']   = '<li>';
@@ -136,7 +136,7 @@ class Admin extends CI_Controller {
 		$user_list = $this->user_model->get_user_list(10,$offset);
 		$nomor=1;
 		foreach($user_list as $user){
-			$this->table->add_row($nomor++,$user->username,$user->name,$user->email,'<a href="'.base_url().'user/remove/'.$user->id.'"><i class="icon-remove"></i></a> <a href="'.base_url().'user/detail/'.$user->id.'"><i class="icon-edit"></i></a>');
+			$this->table->add_row($nomor++,$user->username,$user->name,$user->email,'<a href="'.base_url().'user/detail/'.$user->id.'"><span class="label label-success">detail</span></a> <a href="'.base_url().'user/edit/'.$user->id.'"><span class="label label-warning">edit</span></a> <a href="'.base_url().'user/remove/'.$user->id.'"><span class="label label-danger">hapus</span></a>');
 		}
 
 		$data['table']      = $this->table->generate();
@@ -187,8 +187,8 @@ class Admin extends CI_Controller {
 		$config['base_url']        = base_url().'admin/metriclists';
 		$config['total_rows']      = $this->metric_model->get_total_row();
 		$config['per_page']        = 10;
-		$config['full_tag_open']   = '<div class="pagination"><ul>';
-		$config['full_tag_close']  = '</ul></div>';
+		$config['full_tag_open']   = '<ul class="pagination">';
+		$config['full_tag_close']  = '</ul>';
 		$config['first_tag_open']  = '<li>';
 		$config['first_tag_close'] = '</li>';
 		$config['last_tag_open']   = '<li>';
@@ -212,13 +212,13 @@ class Admin extends CI_Controller {
 
 		$this->table->set_template($template);
 
-		$this->table->set_heading(array('data'=>'Nama Kategori','style'=>'width:150px'), array('data'=>'Nama Proses','style'=>'width:150px'), array('data'=>'Nama Metrik','style'=>'width:150px'), array('data'=>'Pertanyaan','style'=>'width:150px'), array('data'=>'Rekomendasi','style'=>'width:150px'), array('data'=>'Opsi','style'=>'min-width:35px'));
+		$this->table->set_heading(array('data'=>'Nama Kategori'), array('data'=>'Nama Proses'), array('data'=>'Nama Metrik'), array('data'=>'Pertanyaan'), array('data'=>'Rekomendasi'), array('data'=>'Opsi'));
 		$metric_list= $this->metric_model->get_metric_list(10,0);
 		$nomor=1;
 		foreach($metric_list as $metric){
 			$cat = $this->metric_model->get_cat_name($metric->cat_id)->row();
 			$proc = $this->metric_model->get_proc_name($metric->proc_id)->row();
-			$this->table->add_row($cat->cat_name, $proc->proc_name, $metric->metric, $metric->question, $metric->recommendation,'<a href="'.base_url().'metric/remove/'.$metric->id.'"><i class="icon-remove"></i></a> <a href="'.base_url().'metric/edit/'.$metric->id.'"><i class="icon-edit"></i></a>');
+			$this->table->add_row($cat->cat_name, $proc->proc_name, $metric->metric, $metric->question, $metric->recommendation,'<a href="'.base_url().'metric/detail/'.$metric->id.'"><span class="label label-success">detail</span></a> <a href="'.base_url().'metric/edit/'.$metric->id.'"><span class="label label-warning">edit</span></a> <a href="'.base_url().'metric/remove/'.$metric->id.'"><span class="label label-danger">hapus</span></a>');
 		}
 
 		$data['table'] = $this->table->generate();
@@ -233,8 +233,8 @@ class Admin extends CI_Controller {
 		$config['base_url']        = base_url().'admin/metriclists';
 		$config['total_rows']      = $this->metric_model->get_total_row();
 		$config['per_page']        = 10;
-		$config['full_tag_open']   = '<div class="pagination"><ul>';
-		$config['full_tag_close']  = '</ul></div>';
+		$config['full_tag_open']   = '<ul class="pagination">';
+		$config['full_tag_close']  = '</ul>';
 		$config['first_tag_open']  = '<li>';
 		$config['first_tag_close'] = '</li>';
 		$config['last_tag_open']   = '<li>';
@@ -257,7 +257,7 @@ class Admin extends CI_Controller {
 
 		$this->table->set_template($template);
 
-		$this->table->set_heading(array('data'=>'Nama Kategori','style'=>'width:150px'), array('data'=>'Nama Proses','style'=>'width:150px'), array('data'=>'Nama Metrik','style'=>'width:150px'), array('data'=>'Pertanyaan','style'=>'width:150px'), array('data'=>'Rekomendasi','style'=>'width:150px'), array('data'=>'Opsi','style'=>'width:80px'));
+		$this->table->set_heading(array('data'=>'Nama Kategori'), array('data'=>'Nama Proses'), array('data'=>'Nama Metrik'), array('data'=>'Pertanyaan'), array('data'=>'Rekomendasi'), array('data'=>'Opsi'));
 		$offset = $this->uri->segment(3);
 		if($offset == null) $offset = 0;
 		$metric_list = $this->metric_model->get_metric_list(10,$offset);
@@ -265,7 +265,7 @@ class Admin extends CI_Controller {
 		foreach($metric_list as $metric){
 			$cat = $this->metric_model->get_cat_name($metric->cat_id)->row();
 			$proc = $this->metric_model->get_proc_name($metric->proc_id)->row();
-			$this->table->add_row($cat->cat_name, $proc->proc_name, $metric->metric, $metric->question, $metric->recommendation,'<a href="'.base_url().'metric/remove/'.$metric->id.'"><i class="icon-remove"></i></a> <a href="'.base_url().'metric/edit/'.$metric->id.'"><i class="icon-edit"></i></a>');
+			$this->table->add_row($cat->cat_name, $proc->proc_name, $metric->metric, $metric->question, $metric->recommendation,'<a href="'.base_url().'metric/detail/'.$metric->id.'"><span class="label label-success">detail</span></a> <a href="'.base_url().'metric/edit/'.$metric->id.'"><span class="label label-warning">edit</span></a> <a href="'.base_url().'metric/remove/'.$metric->id.'"><span class="label label-danger">hapus</span></a>');
 		}
 
 		$data['table']      = $this->table->generate();
@@ -314,8 +314,8 @@ class Admin extends CI_Controller {
 		$config['base_url']        = base_url().'admin/elearninglists';
 		$config['total_rows']      = $this->elearning_model->get_total_row();
 		$config['per_page']        = 10;
-		$config['full_tag_open']   = '<div class="pagination"><ul>';
-		$config['full_tag_close']  = '</ul></div>';
+		$config['full_tag_open']   = '<ul class="pagination">';
+		$config['full_tag_close']  = '</ul>';
 		$config['first_tag_open']  = '<li>';
 		$config['first_tag_close'] = '</li>';
 		$config['last_tag_open']   = '<li>';
@@ -343,7 +343,7 @@ class Admin extends CI_Controller {
 		$elearning_list= $this->elearning_model->get_elearning_list(10,0);
 		$nomor=1;
 		foreach($elearning_list as $elearning){
-			$this->table->add_row($nomor++, $elearning->name, $elearning->desc, '<a href="'.base_url().'elearning/remove/'.$elearning->id.'"><i class="icon-remove"></i></a> <a href="'.base_url().'elearning/edit/'.$elearning->id.'"><i class="icon-edit"></i></a>');
+			$this->table->add_row($nomor++, $elearning->name, $elearning->desc, '<a href="'.base_url().'elearning/detail/'.$elearning->id.'"><span class="label label-success">detail</span></a> <a href="'.base_url().'elearning/edit/'.$elearning->id.'"><span class="label label-warning">edit</span></a> <a href="'.base_url().'elearning/remove/'.$elearning->id.'"><span class="label label-danger">hapus</span></a>');
 		}
 
 		$data['table']      = $this->table->generate();
@@ -357,8 +357,8 @@ class Admin extends CI_Controller {
 		$config['base_url']        = base_url().'admin/elearninglists';
 		$config['total_rows']      = $this->elearning_model->get_total_row();
 		$config['per_page']        = 10;
-		$config['full_tag_open']   = '<div class="pagination"><ul>';
-		$config['full_tag_close']  = '</ul></div>';
+		$config['full_tag_open']   = '<ul class="pagination">';
+		$config['full_tag_close']  = '</ul>';
 		$config['first_tag_open']  = '<li>';
 		$config['first_tag_close'] = '</li>';
 		$config['last_tag_open']   = '<li>';
@@ -387,7 +387,7 @@ class Admin extends CI_Controller {
 		$elearning_list = $this->elearning_model->get_metric_list(10,$offset);
 		$nomor=1;
 		foreach($elearning_list as $elearning){
-			$this->table->add_row($nomor++, $elearning->name, $elearning->desc, '<a href="'.base_url().'metric/remove/'.$metric->id.'"><i class="icon-remove"></i></a> <a href="'.base_url().'metric/edit/'.$metric->id.'"><i class="icon-edit"></i></a>');
+			$this->table->add_row($nomor++, $elearning->name, $elearning->desc, '<a href="'.base_url().'elearning/detail/'.$elearning->id.'"><span class="label label-success">detail</span></a> <a href="'.base_url().'elearning/edit/'.$elearning->id.'"><span class="label label-warning">edit</span></a> <a href="'.base_url().'elearning/remove/'.$elearning->id.'"><span class="label label-danger">hapus</span></a>');
 		}
 
 		$data['table']      = $this->table->generate();

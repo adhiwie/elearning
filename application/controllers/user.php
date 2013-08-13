@@ -85,7 +85,7 @@ class User extends CI_Controller {
 			}
 		} else {
 			$data['isi']   = 'user_login';
-			$data['error'] = '<p><span class="alert alert-error">Login gagal. Username atau password salah</span></p>';
+			$data['error'] = '<p><span class="alert alert-danger">Login gagal. Username atau password salah</span></p>';
 			$this->load->view('home',$data);
 		}
 	}
@@ -93,9 +93,7 @@ class User extends CI_Controller {
 	public function logout()
 	{
 		$this->session->sess_destroy();
-		$data['isi']   = 'user_login';
-		$data['error'] = '<p><span class="alert alert-success">Anda berhasil logout</span></p>';
-		$this->load->view('home',$data);
+		redirect('/');
 	}
 
 	public function ahp_question_list()
@@ -689,7 +687,6 @@ class User extends CI_Controller {
 			} else {
 				$nilai_kategori_2+=$nilai_bersih;
 			}
-
 		}
 		//----------------------------------------------------		
 

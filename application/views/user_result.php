@@ -1,7 +1,5 @@
-<div class="alert alert-success">Penilaian berhasil!</div>
 <div class="total-value-container">
 	Nilai
-	<br><br><br>
 	<?php
 		$nilai_total = 0;
 		for($i=0;$i<13;$i++){

@@ -1,0 +1,116 @@
+/* Space out content a bit */
+html,body{
+  height: 100%;
+}
+html {
+  background: url('../img/bg.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.myBackground.jpg', sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='myBackground.jpg', sizingMethod='scale')";
+}
+body {
+  background: none;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: rgb(255, 255, 255);
+    border-bottom: 5px solid #E5652B;
+    background: none;
+}
+
+.nav-pills > li > a {
+  color:#fff;
+  margin: 0 5px;
+  border-radius: 0;
+}
+.nav-pills > li > a:focus {
+  background: none;
+}
+.nav-pills > li > a:hover {
+  background: none;
+  border-bottom: 5px solid #E5652B;
+}
+
+.text-muted {
+    color: #fff;
+}
+/* Everything but the jumbotron gets side spacing for mobile-first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  margin: 0px auto -80px;
+  padding: 0px 0px 80px;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  text-align: center;
+  height: 80px;
+}
+
+/* Custom container */
+.container-narrow {
+  margin: 0 auto;
+  max-width: 940px;
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  color: #fff;
+  background: none;
+  text-align: center;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}

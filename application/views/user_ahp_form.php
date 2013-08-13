@@ -47,5 +47,7 @@
 ?>
 	</tbody>
 </table>
-<center><input type="submit" value="Submit" class="btn btn-primary btn-large" /></center>
+<hr>
+<center><input type="submit" value="Submit" class="btn btn-primary" /></center>
+<p></p>
 </form>
