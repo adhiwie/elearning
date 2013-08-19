@@ -7,6 +7,16 @@ class Ahp_model extends CI_Model {
 		$query = $this->db->get('ahp_result');
 		return $query->result();
 	}
+	public function get_ahp_by_id($user_id)
+	{
+		$this->db->where('user_id',$user_id);
+		$this->db->select('*');
+		return $this->db->get('ahp_result');
+	}
+	public function count_ahp()
+	{
+		return $this->db->count_all('ahp_result');
+	}
 	public function get_aggregated_ahp()
 	{
 		$this->db->select('*');
@@ -42,6 +52,29 @@ class Ahp_model extends CI_Model {
 		$this->db->where('user_id',$user_id);
 		$this->db->select('*');
 		return $this->db->get('normalized_table');
+	}
+	public function empty_aggregated_ahp()
+	{
+		$this->db->empty_table('ahp_aggregated'); 
+	}
+	public function get_column_sum($column_id,$user_id)
+	{
+		$this->db->where(array('column_id' => $column_id, 'user_id' => $user_id));
+		$this->db->select('*');
+		return $this->db->get('column_sum');
+	}
+	public function get_random_index($n)
+	{
+		$this->db->where('n',$n);
+		$this->db->select('R');
+		return $this->db->get('random_index');
+	}
+	public function empty_by_user($user_id)
+	{
+		$this->db->delete('raw_table', array('user_id' => $user_id));
+		$this->db->delete('normalized_table', array('user_id' => $user_id));
+		$this->db->delete('column_sum', array('user_id' => $user_id));
+		$this->db->delete('ahp_result', array('user_id' => $user_id));
 	}
 }
 

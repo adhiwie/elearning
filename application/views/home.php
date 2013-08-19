@@ -48,18 +48,10 @@
 					</a>
 				</li>
 			<?php }elseif($this->session->userdata('role') == 2){?>
-
-			<li <?php if ($this->uri->segment(2)=="edit" OR $this->uri->segment(2)=="edit_submit") echo 'class="active"';?>>
-				<a href="<?=base_url()?>user/edit">
-				<i class="icon-chevron-right"></i>
-				Ubah password
-				</a>
-			</li>
-
 			<li <?php if ($this->uri->segment(2)=="ahp_result") echo 'class="active"';?>>
-				<a href="<?=base_url()?>admin/elearning">
+				<a href="<?=base_url()?>user/ahp_result">
 				<i class="icon-chevron-right"></i>
-				Hasil Penilaian
+				Hasil pembobotan
 				</a>
 			</li>
 			<li>

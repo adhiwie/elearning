@@ -3,6 +3,7 @@ echo validation_errors('<div class="alert alert-danger">','</div>');
 
 if(isset($error)) echo $error;
 echo "<strong><p>Silakan isi data berikut :</p></strong>";
+echo "<hr>";
 echo form_open_multipart('admin/edit_submit','class = "form-horizontal"');
 ?>
 <div class="form-group">

@@ -51,10 +51,13 @@ class User extends CI_Controller {
 				$data['isi'] = 'admin_index';
 				$data['admin_page'] = 'admin_main';
 				$this->load->view('home',$data);
-			} else {
+			} elseif($this->session->userdata('role') == 1) {
 				$detail = $this->user_model->get_detail($username)->row();
 				if($detail->status == 0) $this->question_list('');
 				else redirect('user/result');
+			} else {
+				if($status == 0) redirect('user/ahp_question_list');
+				else redirect('user/ahp_result');
 			}
 		} else {
 			$data['isi'] = 'user_login';
@@ -187,117 +190,25 @@ class User extends CI_Controller {
 			);
 
 		$this->ahp_model->insert_ahp($ahp_data);
-
-		$this->ahp_result();
-		
-	}
-
-	public function ahp_result()
-	{
-		$row_1  = array();
-		$row_2  = array();
-		$row_3  = array();
-		$row_4  = array();
-		$row_5  = array();
-		$row_6  = array();
-		$row_7  = array();
-		$row_8  = array();
-		$row_9  = array();
-		$row_10 = array();
-		$row_11 = array();
-		$row_12 = array();
-		$row_13 = array();
-
-		$this->load->library('table');
-
-		$template = array('table_open' => '<table class="table table-striped">');
-
-		$this->table->set_template($template);
-
-		$this->table->set_heading('','A','B','C','D','E','F','G','H','I','J','K','L','M');
-		$raw_list= $this->ahp_model->get_raw_data($this->session->userdata('id'))->result();
-		foreach($raw_list as $raw){
-			if($raw->row == 1) array_push($row_1,$raw->value);
-			elseif($raw->row == 2) array_push($row_2,$raw->value);
-			elseif($raw->row == 3) array_push($row_3,$raw->value);
-			elseif($raw->row == 4) array_push($row_4,$raw->value);
-			elseif($raw->row == 5) array_push($row_5,$raw->value);
-			elseif($raw->row == 6) array_push($row_6,$raw->value);
-			elseif($raw->row == 7) array_push($row_7,$raw->value);
-			elseif($raw->row == 8) array_push($row_8,$raw->value);
-			elseif($raw->row == 9) array_push($row_9,$raw->value);
-			elseif($raw->row == 10) array_push($row_10,$raw->value);
-			elseif($raw->row == 11) array_push($row_11,$raw->value);
-			elseif($raw->row == 12) array_push($row_12,$raw->value);
-			else array_push($row_13,$raw->value);
-		}
-		$alfabet = array('A','B','C','D','E','F','G','H','I','J','K','L','M');
-		for($row=1;$row<=13;$row++){
-			$index = $row-1;
-			$this->table->add_row('<strong>'.$alfabet[$index].'</strong>',eval('return $row_'.$row.'[0];'),eval('return $row_'.$row.'[1];'),eval('return $row_'.$row.'[2];'),eval('return $row_'.$row.'[3];'),eval('return $row_'.$row.'[4];'),eval('return $row_'.$row.'[5];'),eval('return $row_'.$row.'[6];'),eval('return $row_'.$row.'[7];'),eval('return $row_'.$row.'[8];'),eval('return $row_'.$row.'[9];'),eval('return $row_'.$row.'[10];'),eval('return $row_'.$row.'[11];'),eval('return $row_'.$row.'[12];') );
-		}
-		
-		$data['table']      = $this->table->generate();
-		$data['table2']     = $this->generate_normalized_data();
-		$data['isi']        = 'user_index';
-		$data['admin_page'] = 'user_ahp_result';
-		$this->load->view('home',$data);
-
-	}
-
-	public function generate_normalized_data()
-	{
-		$row_1  = array();
-		$row_2  = array();
-		$row_3  = array();
-		$row_4  = array();
-		$row_5  = array();
-		$row_6  = array();
-		$row_7  = array();
-		$row_8  = array();
-		$row_9  = array();
-		$row_10 = array();
-		$row_11 = array();
-		$row_12 = array();
-		$row_13 = array();
-
-		$this->load->library('table');
-
-		$template = array('table_open' => '<table class="table table-striped">');
-
-		$this->table->set_template($template);
-
-		$this->table->set_heading('','A','B','C','D','E','F','G','H','I','J','K','L','M','AHP');
-		$raw_list= $this->ahp_model->get_normalized_data($this->session->userdata('id'))->result();
-		foreach($raw_list as $raw){
-			if($raw->row == 1) array_push($row_1,$raw->value);
-			elseif($raw->row == 2) array_push($row_2,$raw->value);
-			elseif($raw->row == 3) array_push($row_3,$raw->value);
-			elseif($raw->row == 4) array_push($row_4,$raw->value);
-			elseif($raw->row == 5) array_push($row_5,$raw->value);
-			elseif($raw->row == 6) array_push($row_6,$raw->value);
-			elseif($raw->row == 7) array_push($row_7,$raw->value);
-			elseif($raw->row == 8) array_push($row_8,$raw->value);
-			elseif($raw->row == 9) array_push($row_9,$raw->value);
-			elseif($raw->row == 10) array_push($row_10,$raw->value);
-			elseif($raw->row == 11) array_push($row_11,$raw->value);
-			elseif($raw->row == 12) array_push($row_12,$raw->value);
-			else array_push($row_13,$raw->value);
-		}
-		$alfabet = array('A','B','C','D','E','F','G','H','I','J','K','L','M');
-		$ahp_result = $this->ahp_model->get_ahp()->row();
-		$ahp_score = $ahp_result->bobot;
-		$ahp_list = explode(',',$ahp_score);
-
-		for($row=1;$row<=13;$row++){
-			$index = $row-1;
-			$this->table->add_row('<strong>'.$alfabet[$index].'</strong>',eval('return $row_'.$row.'[0];'),eval('return $row_'.$row.'[1];'),eval('return $row_'.$row.'[2];'),eval('return $row_'.$row.'[3];'),eval('return $row_'.$row.'[4];'),eval('return $row_'.$row.'[5];'),eval('return $row_'.$row.'[6];'),eval('return $row_'.$row.'[7];'),eval('return $row_'.$row.'[8];'),eval('return $row_'.$row.'[9];'),eval('return $row_'.$row.'[10];'),eval('return $row_'.$row.'[11];'),eval('return $row_'.$row.'[12];'),'<strong>'.round($ahp_list[$index],3).'</strong>');
-		}
 		$id = $this->session->userdata('id');
 		$user_data = array('status'=>'1');
-		$this->user_model->set_status($id,$user_data);
-		return $this->table->generate();
-
+		
+		if($this->check_cr($this->session->userdata('id')) >= 0.1){
+			$proc_array = array();
+			$proc_list = $this->metric_model->get_proc_list();
+			foreach($proc_list->result() as $proc){
+				$proc_array[]=$proc->proc_name;
+			}
+			$data['proc_array'] = $proc_array;
+			$data['isi']        = 'user_index';
+			$data['admin_page'] = 'user_ahp_form';
+			$data['error'] = '<p><div class="alert alert-danger"><h4>Pembobotan Gagal</h4>Pembobotan yang anda lakukan tidak konsisten. Silakan ulangi. Terimakasih. </div></p>';
+			$this->ahp_model->empty_by_user($this->session->userdata('id'));
+			$this->load->view('home',$data);
+		} else {
+			$this->user_model->set_status($id,$user_data);
+			$this->aggregate_ahp();
+		}
 	}
 
 	public function hitung_jumlah_kolom($baris,$kolom,$nilai_bobot)
@@ -405,6 +316,30 @@ class User extends CI_Controller {
 		}
 	}
 
+	public function check_cr($user_id)
+	{
+		$eigen_value = array();
+		$total       = 0;
+
+		$ahp_result = $this->ahp_model->get_ahp_by_id($user_id)->row();
+		$pecah = explode(',',$ahp_result->bobot);
+		for($i=0;$i<count($pecah);$i++){
+			array_push($eigen_value, $pecah[$i]);
+		}
+		$j=1;
+		for($i=0;$i<count($eigen_value);$i++){
+			$column_sum = $this->ahp_model->get_column_sum($j,$user_id)->row();
+			$total+=($column_sum->total*$eigen_value[$i]);
+			$j++;
+		}
+
+		$ri = $this->ahp_model->get_random_index(count($eigen_value))->row();
+		$ci = ($total-count($eigen_value))/(count($eigen_value)-1);
+		$cr = $ci/$ri->R;
+		
+		return $cr;
+	}
+
 	public function aggregate_ahp()
 	{
 		$proses_1  =1;
@@ -442,25 +377,108 @@ class User extends CI_Controller {
 				$i++;
 			}while($i<13);
 		}
-		$proses_akhir_1=pow($proses_1,1/3);
-		$proses_akhir_2=pow($proses_2,1/3);
-		$proses_akhir_3=pow($proses_3,1/3);
-		$proses_akhir_4=pow($proses_4,1/3);
-		$proses_akhir_5=pow($proses_5,1/3);
-		$proses_akhir_6=pow($proses_6,1/3);
-		$proses_akhir_7=pow($proses_7,1/3);
-		$proses_akhir_8=pow($proses_8,1/3);
-		$proses_akhir_9=pow($proses_9,1/3);
-		$proses_akhir_10=pow($proses_10,1/3);
-		$proses_akhir_11=pow($proses_11,1/3);
-		$proses_akhir_12=pow($proses_12,1/3);
-		$proses_akhir_13=pow($proses_13,1/3);
+
+		$count_ahp_data = $this->ahp_model->count_ahp();
+		$proses_akhir_1=pow($proses_1,1/$count_ahp_data);
+		$proses_akhir_2=pow($proses_2,1/$count_ahp_data);
+		$proses_akhir_3=pow($proses_3,1/$count_ahp_data);
+		$proses_akhir_4=pow($proses_4,1/$count_ahp_data);
+		$proses_akhir_5=pow($proses_5,1/$count_ahp_data);
+		$proses_akhir_6=pow($proses_6,1/$count_ahp_data);
+		$proses_akhir_7=pow($proses_7,1/$count_ahp_data);
+		$proses_akhir_8=pow($proses_8,1/$count_ahp_data);
+		$proses_akhir_9=pow($proses_9,1/$count_ahp_data);
+		$proses_akhir_10=pow($proses_10,1/$count_ahp_data);
+		$proses_akhir_11=pow($proses_11,1/$count_ahp_data);
+		$proses_akhir_12=pow($proses_12,1/$count_ahp_data);
+		$proses_akhir_13=pow($proses_13,1/$count_ahp_data);
 
 		$isi_data = array(
 			'bobot'=>$proses_akhir_1.','.$proses_akhir_2.','.$proses_akhir_3.','.$proses_akhir_4.','.$proses_akhir_5.','.$proses_akhir_6.','.$proses_akhir_7.','.$proses_akhir_8.','.$proses_akhir_9.','.$proses_akhir_10.','.$proses_akhir_11.','.$proses_akhir_12.','.$proses_akhir_13
 		);
+		$this->ahp_model->empty_aggregated_ahp();
 		$this->ahp_model->insert_aggregated_ahp($isi_data);
+		$this->ahp_result();
 	}
+
+	public function ahp_result()
+	{
+		$row_1  = array();
+		$row_2  = array();
+		$row_3  = array();
+		$row_4  = array();
+		$row_5  = array();
+		$row_6  = array();
+		$row_7  = array();
+		$row_8  = array();
+		$row_9  = array();
+		$row_10 = array();
+		$row_11 = array();
+		$row_12 = array();
+		$row_13 = array();
+		$table_heading = array('Nama Proses');
+		$row_data = array();
+
+		$this->load->library('table');
+
+		$template = array('table_open' => '<table class="table table-striped">');
+
+		$this->table->set_template($template);
+
+		$ahp_result = $this->ahp_model->get_ahp();
+		foreach ($ahp_result as $res) {
+			$user_detail = $this->users_model->get_by_id($res->user_id)->row();
+			array_push($table_heading,$user_detail->name);
+			$pecah = explode(',',$res->bobot);
+			$i=0;
+			do{
+				if($i==0) array_push($row_1,$pecah[$i]);
+				elseif($i==1) array_push($row_2,$pecah[$i]);
+				elseif($i==2) array_push($row_3,$pecah[$i]);
+				elseif($i==3) array_push($row_4,$pecah[$i]);
+				elseif($i==4) array_push($row_5,$pecah[$i]);
+				elseif($i==5) array_push($row_6,$pecah[$i]);
+				elseif($i==6) array_push($row_7,$pecah[$i]);
+				elseif($i==7) array_push($row_8,$pecah[$i]);
+				elseif($i==8) array_push($row_9,$pecah[$i]);
+				elseif($i==9) array_push($row_10,$pecah[$i]);
+				elseif($i==10) array_push($row_11,$pecah[$i]);
+				elseif($i==11) array_push($row_12,$pecah[$i]);
+				elseif($i==12) array_push($row_13,$pecah[$i]);
+				$i++;
+			}while($i<13);
+		}
+		array_push($table_heading,'Hasil aggregasi');
+
+		$count_ahp_data = $this->ahp_model->count_ahp();
+
+		$row = 1;
+		$proc_list= $this->metric_model->get_proc_list()->result();
+		foreach($proc_list as $proc){
+			array_push($row_data,$proc->proc_name);
+			for($i=0;$i<$count_ahp_data;$i++){
+				array_push($row_data,eval('return $row_'.$row.'['.$i.'];'));
+			}
+
+			$aggregated_ahp_result = $this->ahp_model->get_aggregated_ahp()->result();
+			foreach($aggregated_ahp_result as $aggregated){
+				$pecah = explode(',',$aggregated->bobot);
+				array_push($row_data,'<strong>'.$pecah[$row-1].'</strong>');
+			}
+
+			$this->table->add_row($row_data);
+			$row_data = array();
+			$row++;
+		}
+
+		$this->table->set_heading($table_heading);
+		$data['table']      = $this->table->generate();
+		$data['isi']        = 'user_index';
+		$data['admin_page'] = 'user_ahp_result';
+		$this->load->view('home',$data);
+
+	}
+
 	public function question_list($temp)
 	{
 		$this->load->library('table');
@@ -520,7 +538,7 @@ class User extends CI_Controller {
 				);
 			}
 		}
-		if($temp!='') $data['error'] = '<div class="alert alert-error"><strong>Submit gagal!</strong><br/>Kuisioner belum diisi dengan lengkap, mohon ulangi.</div>';
+		if($temp!='') $data['error'] = '<div class="alert alert-danger"><strong>Submit gagal!</strong><br/>Kuisioner belum diisi dengan lengkap, mohon ulangi.</div>';
 		$data['table'] = $this->table->generate();
 
 		$data['isi'] = 'user_index';

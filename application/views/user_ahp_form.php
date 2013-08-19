@@ -1,4 +1,6 @@
 <h3>Kuisioner</h3>
+<hr>
+<p><div class="alert alert-info"><h4>Petunjuk</h4>Silakan untuk melakukan pembobotan sesuai kriteria di bawah ini. Jika proses A lebih penting dari proses B, maka berikan bobot mulai dari 2 sampai 9. Jika proses B lebih penting dari A, maka sebaliknya, pilih bobot dari 1/9 sampai 1/2. Jika proses A dan B memiliki bobot yang sama, maka pilih bobot 1 </div></p>
 <?php
 	if(isset($error)) echo $error;
 ?>
@@ -40,9 +42,11 @@
 						<option value=0.125>1/8</option>
 						<option value=0.111>1/9</option>
 					  </select>
-			</td>';
+				</td>';
+			echo '</tr>';
 		}
 		$k++;
+		if($k<13) echo '<tr><td colspan="4" style="background:rgb(24, 188, 156);height:40px;"></td></tr>';
 	}
 ?>
 	</tbody>

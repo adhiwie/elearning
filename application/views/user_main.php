@@ -1,4 +1,7 @@
 <h3>Kuisioner</h3>
+<hr>
+<p><div class="alert alert-info"><h4>Petunjuk :</h4>Mohon untuk menjawab pertanyaan di bawah ini. Silakan pilih <strong>Ya</strong> jika fitur tersebut ada pada elearning dan pilih <strong>Tidak</strong> jika fitur tersebut tidak ada pada elearning.</div><p>
+<hr>
 <?php
 	if(isset($error)) echo $error;
 ?>
@@ -6,5 +9,6 @@
 <?php
 	echo $table;
 ?>
-<center><input type="submit" value="Submit" class="btn btn-primary btn-large" /></center>
+<hr>
+<center><input type="submit" value="Submit" class="btn btn-primary" /></center><br>
 </form>
