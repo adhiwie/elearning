@@ -193,7 +193,8 @@ class User extends CI_Controller {
 		$id = $this->session->userdata('id');
 		$user_data = array('status'=>'1');
 		
-		if($this->check_cr($this->session->userdata('id')) >= 0.1){
+		$consistency_ratio = $this->check_cr($this->session->userdata('id'));
+		if($consistency_ratio >= 0.1){
 			$proc_array = array();
 			$proc_list = $this->metric_model->get_proc_list();
 			foreach($proc_list->result() as $proc){
@@ -202,7 +203,7 @@ class User extends CI_Controller {
 			$data['proc_array'] = $proc_array;
 			$data['isi']        = 'user_index';
 			$data['admin_page'] = 'user_ahp_form';
-			$data['error'] = '<p><div class="alert alert-danger"><h4>Pembobotan Gagal</h4>Pembobotan yang anda lakukan tidak konsisten. Silakan ulangi. Terimakasih. </div></p>';
+			$data['error'] = '<p><div class="alert alert-danger"><h4>Pembobotan Gagal</h4>Hasil pembobotan anda adalah <strong>'.$consistency_ratio.'</strong>, pembobotan tersebut melebihi konsistensi rasio 0,1 dan tidak konsisten. Silakan mengulangi pembobotan. Terimakasih. </div></p>';
 			$this->ahp_model->empty_by_user($this->session->userdata('id'));
 			$this->load->view('home',$data);
 		} else {
@@ -565,9 +566,17 @@ class User extends CI_Controller {
 		if($error>0){
 			$this->question_list($temp);
 		} else {
-			$this->count_result($temp);
+			redirect('user/thanks');
+			//$this->count_result($temp);
 		}
 
+	}
+
+	public function thanks(){
+		$data['isi']            = 'user_index';
+		$data['admin_page']     = 'thanks';
+		$data['pesan']			= '<div class="alert alert-success"><h4>Terimakasih!</h4>Saat ini data sudah disimpan. Terimakasih telah melakukan penilaian.</div>';
+		$this->load->view('home',$data);
 	}
 
 	public function count_result($temp)

@@ -21,10 +21,12 @@
 	    <div class="container-narrow">
 	      <div class="header">
 	        <ul class="nav nav-pills pull-right">
+            <!--
 	          <li class="active"><a href="<?php echo base_url();?>">Home</a></li>
 	          <li><a href="#">Tentang</a></li>
 	          <li><a href="#">Cara Kerja</a></li>
 	          <li><a href="#">Kontak</a></li>
+            -->
 	        </ul>
 	        <h3 class="text-muted">Evalator</h3>
 	      </div>
